@@ -5,5 +5,19 @@ body {
 
 #canvas {
     background-color: lightpink;
-    border-bottom: 1 px solid purple;
+    border-bottom: 5px solid purple;
+}
+
+
+
+.music-control {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#gameContainer h1 {
+    background-color: aqua;
 }
