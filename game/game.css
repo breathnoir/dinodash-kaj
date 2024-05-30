@@ -5,7 +5,7 @@ body {
 
 #canvas {
     background-color: lightpink;
-    border-bottom: 5px solid purple;
+    /* border-bottom: 5px solid purple; */
 }
 
 
@@ -16,8 +16,4 @@ body {
     left: 10px;
     font-size: 24px;
     cursor: pointer;
-}
-
-#gameContainer h1 {
-    background-color: aqua;
 }

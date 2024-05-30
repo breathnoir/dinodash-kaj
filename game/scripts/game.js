@@ -1,5 +1,5 @@
 DinoGame.Playing = {
-    init: function() {
+    init: function () {
         const container = document.getElementById('gameContainer');
         container.innerHTML = `<h1>Game On!</h1><canvas id="canvas"></canvas>`;
 
@@ -26,12 +26,13 @@ DinoGame.Playing = {
 
         // Start game loop
         requestAnimationFrame(this.draw.bind(this));
-        setInterval(() => DinoGame.Playing.spawnObstacle(), 1000);
+        this.obstacleTimer = setInterval(this.spawnObstacle.bind(this), 1000); // Spawn every 2 seconds
+        // setInterval(() => DinoGame.Playing.spawnObstacle(), 1000);
     },
 
-    setupEntities: function() {
+    setupEntities: function () {
         // Define the Entity base class
-        DinoGame.Entity = function(x, y, width, height, imgSrc) {
+        DinoGame.Entity = function (x, y, width, height, imgSrc) {
             this.x = x;
             this.y = y;
             this.width = width;
@@ -40,12 +41,12 @@ DinoGame.Playing = {
             this.img.src = imgSrc;
         };
 
-        DinoGame.Entity.prototype.draw = function(context) {
+        DinoGame.Entity.prototype.draw = function (context) {
             context.drawImage(this.img, this.x, this.y, this.width, this.height);
         };
 
         // Define the Character class
-        DinoGame.Character = function(x, y) {
+        DinoGame.Character = function (x, y) {
             DinoGame.Entity.call(this, x, y, 88, 94, 'assets/character.svg');
             this.velocityY = 0;
         };
@@ -53,7 +54,7 @@ DinoGame.Playing = {
         DinoGame.Character.prototype = Object.create(DinoGame.Entity.prototype);
         DinoGame.Character.prototype.constructor = DinoGame.Character;
 
-        DinoGame.Character.prototype.update = function(gravity, groundHeight) {
+        DinoGame.Character.prototype.update = function (gravity, groundHeight) {
             this.velocityY += gravity;
             this.y = Math.min(this.y + this.velocityY, groundHeight - this.height);
         };
@@ -62,7 +63,7 @@ DinoGame.Playing = {
         this.character = new DinoGame.Character(50, this.panel.height - 94);
 
         // Define the Obstacle class
-        DinoGame.Obstacle = function(x, y, imgSrc) {
+        DinoGame.Obstacle = function (x, y, imgSrc) {
             DinoGame.Entity.call(this, x, y, 70, 70, imgSrc);
         };
 
@@ -70,8 +71,11 @@ DinoGame.Playing = {
         DinoGame.Obstacle.prototype.constructor = DinoGame.Obstacle;
     },
 
-    draw: function() {
-        if(this.gameOver) return;
+    draw: function () {
+        if (this.gameOver) {
+            clearInterval(this.obstacleTimer); // Ensure we stop spawning new obstacles if game is over
+            return;
+        } 
         this.context.clearRect(0, 0, this.panel.width, this.panel.height);
 
         // Update and draw character
@@ -86,7 +90,7 @@ DinoGame.Playing = {
                 this.gameOver = true;
                 const finalScore = this.score;
                 localStorage.setItem('finalScore', finalScore);
-                // DinoGame.loadState('GAME_OVER');
+                DinoGame.loadState('GAME_OVER');
             }
             return obstacle.x + obstacle.width > 0;
         });
@@ -100,46 +104,39 @@ DinoGame.Playing = {
         requestAnimationFrame(this.draw.bind(this));
     },
 
-    detectCollision: function(o1, o2) {
+    detectCollision: function (o1, o2) {
         return o1.x < o2.x + o2.width && o1.x + o1.width > o2.x &&
-               o1.y < o2.y + o2.height && o1.y + o1.height > o2.y;
+            o1.y < o2.y + o2.height && o1.y + o1.height > o2.y;
     },
 
-    jump: function(event) {
+    jump: function (event) {
         if (event.code === 'Space' && this.character.y >= this.panel.height - this.character.height) {
             this.character.velocityY = -10;
         }
     },
 
-    spawnObstacle: function() {
-        const obstacleChoices = [
-            { src: 'assets/reedmace1.svg', threshold: 0.50 }, // Most common
-            { src: 'assets/reedmace2.svg', threshold: 0.70 }, // Less common
-            { src: 'assets/reedmace3.svg', threshold: 0.90 }  // Least common
-        ];
+    spawnObstacle: function () {
+        let placeObstacle = Math.random();
+        if (placeObstacle > 0.90) {
+            let obstacle = new DinoGame.Obstacle(700, this.panel.height - 70, "assets/reedmace3.svg");
+            this.obstacles.push(obstacle);
 
-        let random = Math.random();
-        let chosenObstacle;
+        } else if (placeObstacle > 0.70) {
+            let obstacle = new DinoGame.Obstacle(700, this.panel.height - 70, "assets/reedmace2.svg");
+            this.obstacles.push(obstacle);
 
-        for (let i = 0; i < obstacleChoices.length; i++) {
-            if (random > obstacleChoices[i].threshold) {
-                chosenObstacle = obstacleChoices[i];
-            } else {
-                break; // Since the choices are ordered by threshold, stop at the first match
-            }
+        } else if (placeObstacle > 0.50) {
+            let obstacle = new DinoGame.Obstacle(700, this.panel.height - 70, "assets/reedmace1.svg");
+            this.obstacles.push(obstacle);
+
         }
 
-        // If no obstacle was chosen due to low random value, default to the first type
-        if (!chosenObstacle) {
-            chosenObstacle = obstacleChoices[0];
-        }
-
-        let obstacle = new DinoGame.Obstacle(700, this.panel.height - 70, chosenObstacle.src);
-        this.obstacles.push(obstacle);
-
-        // Remove obstacles if more than 5 exist
         if (this.obstacles.length > 5) {
             this.obstacles.shift();
         }
-    },
+        // console.log('Spawning obstacle at x:', obstacle.x, 'Total obstacles:', this.obstacles.length);
+
+
+    }
+
 };
