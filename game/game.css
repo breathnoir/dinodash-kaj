@@ -1,3 +1,8 @@
+:root {
+    --dark-color: #220061;
+    --light-color: #1c0083;
+  }
+  
   /* Fonts */
   @font-face {
     font-family: pixelFont;
@@ -12,20 +17,54 @@
 body {
     font-family: pixelFont;
     text-align: center;
+    font-size: larger;
 }
 
 body header h1 {
     font-family: blockFont;
     font-weight: 100;
     font-size: 100px;
-    color: blue;
+    color:var(--dark-color);
 }
 
 #canvas {
     background-color: lightpink;
-    /* border-bottom: 5px solid purple; */
+    border-bottom: 5px solid purple;
 }
 
+.textInput {
+    width: 300px;
+    border: 5px var(--light-color);
+    border-style: dashed;
+    line-height: 200%;
+    padding: 10px;
+    font-size: large;
+    font-family: pixelFont;
+    text-align: center;
+}
+
+button {
+    font-family: pixelFont;
+    background-color: var(--dark-color);
+    color: white;
+    font-size:x-large;
+    border: none;
+    line-height: 200%;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    margin: 50px;
+    box-shadow: 5px 8px rgba(0,0,0,0.19);
+    transform: scale(1);
+    transition: 0.3s ease;
+
+}
+
+button:hover {
+    transform: scale(1.3);
+    transition: 0.3s ease;
+    box-shadow: 10px 15px rgba(0,0,0,0.19);
+}
 
 
 .music-control {
@@ -40,6 +79,7 @@ body header h1 {
 
 ul {
     list-style-type: none;
+    padding: 0;
   }
   
   li {
@@ -62,6 +102,7 @@ ul {
     margin: 10px;
     cursor: pointer;
   }
+  
   
   label:before {
     display: block;
@@ -92,6 +133,30 @@ ul {
     z-index: -1;
   }
 
+  #selecting {
+    display: flex;
+    flex-direction: row;       
+    justify-content: center;  
+    align-items: stretch;
+}
+
+#colorSelect {
+    display: flex;
+    flex-direction: row;       
+    align-items: center;
+}
+
+fieldset {
+    border: 5px var(--light-color);
+    border-style: dashed;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+legend{
+    font-size: 24px;
+}
+
   /* header animation */
   h1 span {
     display: inline-block;
@@ -117,5 +182,16 @@ h1 span:nth-child(even) {
 @keyframes floatDown {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(10px); }
+}
+
+
+
+aside {
+    position: fixed;
+    top: 60px;
+    left: 10px;
+    width: 200px;
+    padding: 10px;
+    border: 5px var(--light-color) dashed;
 }
 

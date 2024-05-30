@@ -14,9 +14,9 @@ DinoGame.Menu = {
             <article>
                 <form id="startForm">
                     <label for="playerName">Player Name:</label>
-                    <input type="text" id="playerName" name="playerName" placeholder="Enter your name" autofocus required maxlength="15"> 
-
-                    <fieldset>
+                    <input class="textInput" type="text" id="playerName" name="playerName" placeholder="Enter your name" autofocus required maxlength="15"> 
+<div id="selecting">
+                    <fieldset id="charSelect">
                     <legend>Choose Character</legend>
                     <ul>
                         <li><input type="radio" name="character" id="ch1" value="dino1" checked/>
@@ -25,11 +25,14 @@ DinoGame.Menu = {
                         <li><input type="radio" name="character" id="ch2" value="dino2" />
                             <label for="ch2"><img src="assets/reedmace1.svg" /></label>
                         </li>
+                        <li><input type="radio" name="character" id="ch3" value="dino2" />
+                            <label for="ch3"><img src="assets/reedmace2.svg" /></label>
+                        </li>
                     </ul>
                     </fieldset>
 
-                    <fieldset>
-                        <legend>Choose Color Palette</legend>
+                    <fieldset id="colorSelect">
+                        <legend>Choose Game Palette</legend>
                         <ul>
                             <li>
                                 <input type="radio" name="color" value="light" id="clr1" checked>
@@ -41,7 +44,7 @@ DinoGame.Menu = {
                             </li>
                         </ul>
                     </fieldset>
-
+</div>
                     <button type="submit">Start Game</button>
                 </form>
             </article>
@@ -49,7 +52,7 @@ DinoGame.Menu = {
 
         <aside id="instructions">
             <h2>How to Play</h2>
-            <p>Use the spacebar to jump over obstacles. The longer you survive, the higher your score!</p>
+            <p>Use the spacebar to jump over obstacles. <br> The longer you survive, the higher your score!</p>
         </aside>
     </main>
                               `;
