@@ -26,7 +26,7 @@ DinoGame.Playing = {
 
         // Start game loop
         requestAnimationFrame(this.draw.bind(this));
-        this.obstacleTimer = setInterval(this.spawnObstacle.bind(this), 1000); // Spawn every 2 seconds
+        this.obstacleTimer = setInterval(this.spawnObstacle.bind(this), 1000); 
         // setInterval(() => DinoGame.Playing.spawnObstacle(), 1000);
     },
 

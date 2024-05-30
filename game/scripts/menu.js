@@ -4,7 +4,9 @@ DinoGame.Menu = {
         container.innerHTML = `
         
     <header>
-        <h1>Dino Dash</h1>
+    <h1>
+    <span>D</span><span>i</span><span>N</span><span>o</span> <span>D</span><span>a</span><span>S</span><span>h</span>
+    </h1>
     </header>
 
     <main>
@@ -12,30 +14,32 @@ DinoGame.Menu = {
             <article>
                 <form id="startForm">
                     <label for="playerName">Player Name:</label>
-                    <input type="text" id="playerName" name="playerName" placeholder="Enter your name" autofocus required>
+                    <input type="text" id="playerName" name="playerName" placeholder="Enter your name" autofocus required maxlength="15"> 
 
                     <fieldset>
-                        <legend>Choose Your Character</legend>
-                        <label>
-                            <input type="radio" name="character" value="dino1" checked>
-                            Dino 1
-                        </label>
-                        <label>
-                            <input type="radio" name="character" value="dino2">
-                            Dino 2
-                        </label>
+                    <legend>Choose Character</legend>
+                    <ul>
+                        <li><input type="radio" name="character" id="ch1" value="dino1" checked/>
+                            <label for="ch1"><img src="assets/character.svg" /></label>
+                        </li>
+                        <li><input type="radio" name="character" id="ch2" value="dino2" />
+                            <label for="ch2"><img src="assets/reedmace1.svg" /></label>
+                        </li>
+                    </ul>
                     </fieldset>
 
                     <fieldset>
                         <legend>Choose Color Palette</legend>
-                        <label>
-                            <input type="radio" name="color" value="light" checked>
-                            Light
-                        </label>
-                        <label>
-                            <input type="radio" name="color" value="dark">
-                            Dark
-                        </label>
+                        <ul>
+                            <li>
+                                <input type="radio" name="color" value="light" id="clr1" checked>
+                                <label for="clr1"><div>Light</div></label>
+                            </li>
+                            <li>
+                                <input type="radio" name="color" value="light" id="clr2">
+                                <label for="clr2"><div>Dark</div></label>
+                            </li>
+                        </ul>
                     </fieldset>
 
                     <button type="submit">Start Game</button>
@@ -51,7 +55,7 @@ DinoGame.Menu = {
                               `;
 
         document.getElementById('startForm').addEventListener('submit', function (event) {
-            event.preventDefault(); 
+            event.preventDefault();
             const playerName = document.getElementById('playerName').value;
             const character = document.querySelector('input[name="character"]:checked').value;
             const colorPalette = document.querySelector('input[name="color"]:checked').value;

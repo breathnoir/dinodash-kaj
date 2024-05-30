@@ -1,6 +1,24 @@
+  /* Fonts */
+  @font-face {
+    font-family: pixelFont;
+    src: url(assets/ARCADECLASSIC.TTF);
+  }
+
+  @font-face {
+    font-family: blockFont;
+    src: url(assets/Blox2.ttf);
+  }
+
 body {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: pixelFont;
     text-align: center;
+}
+
+body header h1 {
+    font-family: blockFont;
+    font-weight: 100;
+    font-size: 100px;
+    color: blue;
 }
 
 #canvas {
@@ -17,3 +35,87 @@ body {
     font-size: 24px;
     cursor: pointer;
 }
+
+ /* Character and Color Pallete Select */
+
+ul {
+    list-style-type: none;
+  }
+  
+  li {
+    display: inline-block;
+  }
+  
+  input[type="radio"][id^="ch"] {
+    display: none;
+  }
+
+  input[type="radio"][id^="clr"] {
+    display: none;
+  }
+  
+  label {
+
+    padding: 10px;
+    display: block;
+    position: relative;
+    margin: 10px;
+    cursor: pointer;
+  }
+  
+  label:before {
+    display: block;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    line-height: 28px;
+    transition-duration: 0.4s;
+    transform: scale(0);
+  }
+  
+  label div{
+    transition-duration: 0.2s;
+  }
+
+  label img{
+    height: 100px;
+    width: 100px;
+    transition-duration: 0.2s;
+    transform-origin: 50% 50%;
+  }
+  
+  :checked + label img, :checked + label div{
+    transform: scale(1.5);
+    z-index: -1;
+  }
+
+  /* header animation */
+  h1 span {
+    display: inline-block;
+    vertical-align: middle;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+h1 span:nth-child(odd) {
+    animation-name: floatUp;
+}
+
+h1 span:nth-child(even) {
+    animation-name: floatDown;
+}
+
+@keyframes floatUp {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes floatDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+}
+
