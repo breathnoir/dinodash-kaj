@@ -1,26 +1,25 @@
 // sw.js
 const CACHE_NAME = 'dino-game-v1';
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/game.css',
-    '/scripts/setup.js',
-    '/scripts/menu.js',
-    '/scripts/game.js',
-    '/scripts/gameover.js',
-    '/assets/music.mp3',
-    '/assets/ARCADECLASSIC.TTF',
-    '/assets/Blox2.ttf',
-    '/assets/sprite_dino1.svg',
-    '/assets/sprite_dino2.svg',
-    '/assets/sprite_frog1.svg',
-    '/assets/sprite_frog2.svg',
-    '/assets/sprite_mouse1.svg',
-    '/assets/sprite_mouse2.svg',
-    '/assets/reedmace1.svg',
-    '/assets/reedmace2.svg',
-    '/assets/reedmace3.svg'
-    
+    '/dinodash-kaj/',
+    '/dinodash-kaj/index.html',
+    '/dinodash-kaj/game.css',
+    '/dinodash-kaj/scripts/setup.js',
+    '/dinodash-kaj/scripts/menu.js',
+    '/dinodash-kaj/scripts/game.js',
+    '/dinodash-kaj/scripts/gameover.js',
+    '/dinodash-kaj/assets/music.mp3',
+    '/dinodash-kaj/assets/ARCADECLASSIC.TTF',
+    '/dinodash-kaj/assets/Blox2.ttf',
+    '/dinodash-kaj/assets/sprite_dino1.svg',
+    '/dinodash-kaj/assets/sprite_dino2.svg',
+    '/dinodash-kaj/assets/sprite_frog1.svg',
+    '/dinodash-kaj/assets/sprite_frog2.svg',
+    '/dinodash-kaj/assets/sprite_mouse1.svg',
+    '/dinodash-kaj/assets/sprite_mouse2.svg',
+    '/dinodash-kaj/assets/reedmace1.svg',
+    '/dinodash-kaj/assets/reedmace2.svg',
+    '/dinodash-kaj/assets/reedmace3.svg'
 ];
 
 self.addEventListener('install', function(event) {
