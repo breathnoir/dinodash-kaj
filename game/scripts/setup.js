@@ -1,28 +1,3 @@
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-        navigator.serviceWorker.register('https://breathnoir.github.io/dinodash-kaj/game/sw.js').then(function(registration) {
-            console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        }, function(err) {
-            console.log('ServiceWorker registration failed: ', err);
-        });
-    });
-}
-
-function updateOnlineStatus() {
-    if (navigator.onLine) {
-        console.log('Online');
-        // Additional actions when online
-    } else {
-        console.log('Offline');
-        // Additional actions when offline
-    }
-}
-
-window.addEventListener('online',  updateOnlineStatus);
-window.addEventListener('offline', updateOnlineStatus);
-
-updateOnlineStatus();
-
 var DinoGame = DinoGame || {};
 
 DinoGame.music = new Audio('assets/music.mp3');

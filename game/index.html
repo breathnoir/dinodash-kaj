@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="game.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
     <div class="music-control">
         <i id="musicToggle" class="fas fa-volume-up"></i>
@@ -19,5 +21,32 @@
     <script src="scripts/menu.js"></script>
     <script src="scripts/game.js"></script>
     <script src="scripts/gameover.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/sw.js').then(function (registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function (err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+
+        function updateOnlineStatus() {
+            if (navigator.onLine) {
+                console.log('Online');
+                // Additional actions when online
+            } else {
+                console.log('Offline');
+                // Additional actions when offline
+            }
+        }
+
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+
+        updateOnlineStatus();
+    </script>
 </body>
+
 </html>
