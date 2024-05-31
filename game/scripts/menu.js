@@ -14,19 +14,20 @@ DinoGame.Menu = {
             <article>
                 <form id="startForm">
                     <label for="playerName">Player Name:</label>
-                    <input class="textInput" type="text" id="playerName" name="playerName" placeholder="Enter your name" autofocus required maxlength="15"> 
+                    <input class="textInput" type="text" id="playerName" name="playerName" placeholder="Enter your name" 
+                    value="${localStorage.getItem('playerName') ? localStorage.getItem('playerName') : ''}" autofocus required maxlength="15"> 
 <div id="selecting">
                     <fieldset id="charSelect">
                     <legend>Choose Character</legend>
                     <ul>
-                        <li><input type="radio" name="character" id="ch1" value="dino1" checked/>
-                            <label for="ch1"><img src="assets/character.svg" /></label>
+                        <li><input type="radio" name="character" id="ch1" value="dino" checked/>
+                            <label for="ch1"><img src="assets/sprite_dino1.svg" /></label>
                         </li>
-                        <li><input type="radio" name="character" id="ch2" value="dino2" />
-                            <label for="ch2"><img src="assets/reedmace1.svg" /></label>
+                        <li><input type="radio" name="character" id="ch2" value="frog" />
+                            <label for="ch2"><img src="assets/sprite_frog1.svg" /></label>
                         </li>
-                        <li><input type="radio" name="character" id="ch3" value="dino2" />
-                            <label for="ch3"><img src="assets/reedmace2.svg" /></label>
+                        <li><input type="radio" name="character" id="ch3" value="mouse" />
+                            <label for="ch3"><img src="assets/sprite_mouse2.svg" /></label>
                         </li>
                     </ul>
                     </fieldset>
@@ -39,7 +40,7 @@ DinoGame.Menu = {
                                 <label for="clr1"><div>Light</div></label>
                             </li>
                             <li>
-                                <input type="radio" name="color" value="light" id="clr2">
+                                <input type="radio" name="color" value="dark" id="clr2">
                                 <label for="clr2"><div>Dark</div></label>
                             </li>
                         </ul>
@@ -57,9 +58,25 @@ DinoGame.Menu = {
     </main>
                               `;
 
-        document.getElementById('startForm').addEventListener('submit', function (event) {
+        this.setupForm();
+
+    },
+
+    setupForm: function () {
+        const bodyElement = document.body;
+        const form = document.getElementById('startForm');
+        const playerNameInput = document.getElementById('playerName');
+        playerNameInput.value = localStorage.getItem('playerName') || '';
+
+        const storedCharacter = localStorage.getItem('character') || 'dino';
+        document.querySelector(`input[name="character"][value="${storedCharacter}"]`).checked = true;
+
+        const storedColor = localStorage.getItem('colorPalette') || 'light';
+        document.querySelector(`input[name="color"][value="${storedColor}"]`).checked = true;
+
+        form.addEventListener('submit', function (event) {
             event.preventDefault();
-            const playerName = document.getElementById('playerName').value;
+            const playerName = playerNameInput.value;
             const character = document.querySelector('input[name="character"]:checked').value;
             const colorPalette = document.querySelector('input[name="color"]:checked').value;
 
@@ -70,5 +87,15 @@ DinoGame.Menu = {
             DinoGame.loadState('PLAYING');
         });
 
+        // Add change listeners for theme adjustment
+        document.querySelectorAll('input[name="color"]').forEach(input => {
+            input.addEventListener('change', function() {
+                bodyElement.className = this.value === 'light' ? 'body-light' : 'body-dark';
+            });
+        });
+
+        // Set initial theme based on stored value or default
+        bodyElement.className = storedColor === 'light' ? 'body-light' : 'body-dark';
     }
+
 };

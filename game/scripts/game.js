@@ -9,9 +9,14 @@ DinoGame.Playing = {
         this.context = this.panel.getContext('2d');
 
         const playerName = localStorage.getItem('playerName');
-        const character = localStorage.getItem('character');
         const colorPalette = localStorage.getItem('colorPalette');
+        const canvasElement = document.getElementById('canvas');
 
+        if (colorPalette === 'light') {
+            canvasElement.className = 'canvas-light';
+        } else if (colorPalette === 'dark') {
+            canvasElement.className = 'canvas-dark';
+        }
         // Entity and Character setup
         this.setupEntities();
 
@@ -26,7 +31,7 @@ DinoGame.Playing = {
 
         // Start game loop
         requestAnimationFrame(this.draw.bind(this));
-        this.obstacleTimer = setInterval(this.spawnObstacle.bind(this), 1000); 
+        this.obstacleTimer = setInterval(this.spawnObstacle.bind(this), 1000);
         // setInterval(() => DinoGame.Playing.spawnObstacle(), 1000);
     },
 
@@ -47,8 +52,13 @@ DinoGame.Playing = {
 
         // Define the Character class
         DinoGame.Character = function (x, y) {
-            DinoGame.Entity.call(this, x, y, 88, 94, 'assets/character.svg');
+            this.character = localStorage.getItem('character');
+            // console.log(this.character);
+
+            DinoGame.Entity.call(this, x, y, 88, 94, `assets/sprite_${this.character}1.svg`);
             this.velocityY = 0;
+            this.currentSprite = 1;
+            this.frameCount = 1;
         };
 
         DinoGame.Character.prototype = Object.create(DinoGame.Entity.prototype);
@@ -57,6 +67,13 @@ DinoGame.Playing = {
         DinoGame.Character.prototype.update = function (gravity, groundHeight) {
             this.velocityY += gravity;
             this.y = Math.min(this.y + this.velocityY, groundHeight - this.height);
+            if (this.frameCount % 10 === 0) {
+                // console.log(this.character);
+
+                this.currentSprite = this.currentSprite === 1 ? 2 : 1;
+                this.img.src = `assets/sprite_${this.character}${this.currentSprite}.svg`;
+            }
+            this.frameCount = (this.frameCount + 1) % 10;
         };
 
         // Initialize the character
@@ -75,7 +92,7 @@ DinoGame.Playing = {
         if (this.gameOver) {
             clearInterval(this.obstacleTimer); // Ensure we stop spawning new obstacles if game is over
             return;
-        } 
+        }
         this.context.clearRect(0, 0, this.panel.width, this.panel.height);
 
         // Update and draw character
@@ -97,7 +114,7 @@ DinoGame.Playing = {
 
         // Score display
         this.context.fillStyle = 'purple';
-        this.context.font = '20px courier';
+        this.context.font = '20px pixelFont';
         this.score++;
         this.context.fillText('Score: ' + this.score, 5, 20);
 
