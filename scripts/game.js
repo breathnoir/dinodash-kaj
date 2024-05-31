@@ -20,6 +20,12 @@ DinoGame.Playing = {
         // Entity and Character setup
         this.setupEntities();
 
+        if (localStorage.getItem('character') === 'dino') {
+            this.obstacleType = 'cactus';
+        } else {
+            this.obstacleType = 'reedmace';
+        }
+
         this.obstacles = [];
         this.gravity = 0.4;
         this.velocityX = -8;
@@ -80,8 +86,8 @@ DinoGame.Playing = {
         this.character = new DinoGame.Character(50, this.panel.height - 94);
 
         // Define the Obstacle class
-        DinoGame.Obstacle = function (x, y, imgSrc) {
-            DinoGame.Entity.call(this, x, y, 70, 70, imgSrc);
+        DinoGame.Obstacle = function (x, y, width, imgSrc) {
+            DinoGame.Entity.call(this, x, y, width, 70, imgSrc);
         };
 
         DinoGame.Obstacle.prototype = Object.create(DinoGame.Entity.prototype);
@@ -133,17 +139,18 @@ DinoGame.Playing = {
     },
 
     spawnObstacle: function () {
+
         let placeObstacle = Math.random();
         if (placeObstacle > 0.90) {
-            let obstacle = new DinoGame.Obstacle(700, this.panel.height - 70, "assets/reedmace3.svg");
+            let obstacle = new DinoGame.Obstacle(700, this.panel.height - 70, 102, `assets/${this.obstacleType}3.png`);
             this.obstacles.push(obstacle);
 
         } else if (placeObstacle > 0.70) {
-            let obstacle = new DinoGame.Obstacle(700, this.panel.height - 70, "assets/reedmace2.svg");
+            let obstacle = new DinoGame.Obstacle(700, this.panel.height - 70, 70, `assets/${this.obstacleType}2.png`);
             this.obstacles.push(obstacle);
 
         } else if (placeObstacle > 0.50) {
-            let obstacle = new DinoGame.Obstacle(700, this.panel.height - 70, "assets/reedmace1.svg");
+            let obstacle = new DinoGame.Obstacle(700, this.panel.height - 70, 34, `assets/${this.obstacleType}1.png`);
             this.obstacles.push(obstacle);
 
         }
