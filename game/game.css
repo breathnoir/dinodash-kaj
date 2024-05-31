@@ -56,6 +56,12 @@
   button {
       padding: 5px;
   }
+<<<<<<< HEAD
+=======
+  aside {
+    display: none;
+}
+>>>>>>> 989178e (serviceworker)
 }
 
 
