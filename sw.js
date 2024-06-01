@@ -1,4 +1,3 @@
-// sw.js
 const CACHE_NAME = 'dino-game-v1';
 const urlsToCache = [
     '/dinodash-kaj/',

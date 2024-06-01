@@ -15,6 +15,10 @@ DinoGame.checkMusicPreference = function() {
     }
 };
 
+/**
+ * Sets up the music control functionality.
+ *
+ */
 DinoGame.setupMusicControl = function() {
     document.getElementById('musicToggle').addEventListener('click', function() {
         if (this.className.includes('fa-volume-up')) {
@@ -29,6 +33,10 @@ DinoGame.setupMusicControl = function() {
     });
 };
 
+/**
+ * Initializes the game by loading the menu state, checking the music preference, and setting up the music control.
+ *
+ */
 DinoGame.init = function() {
     console.log("Initializing game");
     this.loadState('MENU');
@@ -36,6 +44,11 @@ DinoGame.init = function() {
     this.setupMusicControl();
 };
 
+/**
+ * Loads the specified state of the game and updates the URL.
+ *
+ * @param {string} state - The state to load ('MENU', 'PLAYING', or 'GAME_OVER').
+ */
 DinoGame.loadState = function(state) {
     switch (state) {
         case 'MENU':
@@ -51,7 +64,7 @@ DinoGame.loadState = function(state) {
     history.pushState({state: state}, state, `#${state.toLowerCase()}`);
 };
 
-
+//coming back to the menu state via browser back button
 window.addEventListener('popstate', function(event) {
     if (event.state && event.state.state === 'MENU') {
         DinoGame.loadState('MENU');

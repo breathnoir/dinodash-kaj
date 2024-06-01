@@ -1,4 +1,11 @@
 DinoGame.Playing = {
+    /**
+     * Initializes the game by setting up the game container, canvas, and game entities.
+     * Binds the jump event handler to the document.
+     * Starts the game loop by calling the draw function.
+     * Sets up the obstacle timer to spawn obstacles at regular intervals.
+     *
+     */
     init: function () {
         const container = document.getElementById('gameContainer');
         container.innerHTML = `<h1>Game On!</h1><canvas id="canvas"></canvas>`;
@@ -12,6 +19,7 @@ DinoGame.Playing = {
         const colorPalette = localStorage.getItem('colorPalette');
         const canvasElement = document.getElementById('canvas');
 
+        //theme change
         if (colorPalette === 'light') {
             canvasElement.className = 'canvas-light';
         } else if (colorPalette === 'dark') {
@@ -20,12 +28,14 @@ DinoGame.Playing = {
         // Entity and Character setup
         this.setupEntities();
 
+        //choosing obstacles based on character
         if (localStorage.getItem('character') === 'dino') {
             this.obstacleType = 'cactus';
         } else {
             this.obstacleType = 'reedmace';
         }
 
+        //physics
         this.obstacles = [];
         this.gravity = 0.4;
         this.velocityX = -8;
@@ -70,6 +80,13 @@ DinoGame.Playing = {
         DinoGame.Character.prototype = Object.create(DinoGame.Entity.prototype);
         DinoGame.Character.prototype.constructor = DinoGame.Character;
 
+        /**
+         * Updates the character's position and sprite based on the given gravity and ground height.
+         * Updates frame count and sprite for animation purposes.
+         *
+         * @param {number} gravity - The acceleration due to gravity.
+         * @param {number} groundHeight - The height of the ground.
+         */
         DinoGame.Character.prototype.update = function (gravity, groundHeight) {
             this.velocityY += gravity;
             this.y = Math.min(this.y + this.velocityY, groundHeight - this.height);
@@ -93,7 +110,13 @@ DinoGame.Playing = {
         DinoGame.Obstacle.prototype = Object.create(DinoGame.Entity.prototype);
         DinoGame.Obstacle.prototype.constructor = DinoGame.Obstacle;
     },
-
+    /**
+     * Draws the game scene on the canvas.
+     *
+     * This function is responsible for updating and drawing the character and obstacles on the canvas.
+     * It also handles the game over condition and updates the score display.
+     *
+     */
     draw: function () {
         if (this.gameOver) {
             clearInterval(this.obstacleTimer); // Ensure we stop spawning new obstacles if game is over
@@ -127,17 +150,39 @@ DinoGame.Playing = {
         requestAnimationFrame(this.draw.bind(this));
     },
 
+    /**
+     * Detects collision between two objects.
+     *
+     * @param {Object} o1 - The first object to check for collision.
+     * @param {Object} o2 - The second object to check for collision.
+     * @return {boolean} Returns true if there is a collision between the two objects, false otherwise.
+     */
     detectCollision: function (o1, o2) {
-        return o1.x < o2.x + o2.width && o1.x + o1.width > o2.x &&
-            o1.y < o2.y + o2.height && o1.y + o1.height > o2.y;
+        return o1.x < o2.x + o2.width && // top left corner vs top right corner
+        o1.x + o1.width > o2.x && // top right corner vs top left corner
+        o1.y < o2.y + o2.height && // top left corner vs bottom left corner
+        o1.y + o1.height > o2.y; // bottom left corner vs top left corner
     },
 
+    /**
+     * Handles the jump event and applies the jump velocity to the character if the spacebar is pressed
+     * and the character is on the ground.
+     *
+     * @param {KeyboardEvent} event - The keyboard event triggered by the spacebar press.
+     */
     jump: function (event) {
         if (event.code === 'Space' && this.character.y >= this.panel.height - this.character.height) {
             this.character.velocityY = -10;
         }
     },
 
+    /**
+     * Spawns an obstacle on the game panel. The obstacle is randomly chosen based on the value of `placeObstacle`.
+     * If `placeObstacle` is greater than 0.90, a large obstacle is spawned. If it is greater than 0.70, a medium obstacle is spawned.
+     * If it is greater than 0.50, a small obstacle is spawned. The obstacle is spawned at coordinates (700, `this.panel.height - 70`)
+     * with the image source determined by `this.obstacleType`. If the number of obstacles on the panel exceeds 5, the oldest obstacle is removed.
+     *
+     */
     spawnObstacle: function () {
 
         let placeObstacle = Math.random();

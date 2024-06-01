@@ -14,6 +14,7 @@
   src: url(assets/Blox2.ttf);
 }
 
+/* media queries for smaller screens */
 @media (max-width: 600px) {
   body {
     font-size: medium;

@@ -1,4 +1,9 @@
 DinoGame.GameOver = {
+    /**
+     * Initializes the game over screen by setting the innerHTML of the game container element showing
+     * player name and score. Also calls the loadState function to load the menu state.
+     *
+     */
     init: function() {
         const container = document.getElementById('gameContainer');
         container.innerHTML = `
