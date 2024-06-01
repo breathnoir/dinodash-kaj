@@ -5,7 +5,6 @@ DinoGame.Menu = {
         
     <header>
     <h1>
-    // letters are separated for animation
     <span>D</span><span>i</span><span>N</span><span>o</span> <span>D</span><span>a</span><span>S</span><span>h</span>
     </h1>
     </header>
